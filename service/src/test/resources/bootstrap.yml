@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/dawn?useSSL=false
+    username: root
+    password: dawn12345678
+
+spring.cloud.config.enabled: false
+
+logging.level:
+  root: WARN
+  com.exshell: ERROR
+
+log.datadog.statsd:
+  host: localhost
+  port: 8125

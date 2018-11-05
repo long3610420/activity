@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityTempMapper">
+
+    <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityTemp">
+        <id column="f_id" property="id" jdbcType="BIGINT"/>
+        <result column="f_version" property="version" jdbcType="BIGINT"/>
+        <result column="f_created_at" property="createdAt" jdbcType="BIGINT"/>
+        <result column="f_updated_at" property="updatedAt" jdbcType="BIGINT"/>
+
+        <result column="f_user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="f_account_id" property="accountId" jdbcType="BIGINT"/>
+        <result column="f_currency" property="currency" jdbcType="VARCHAR"/>
+        <result column="f_account_type" property="accountType" jdbcType="TINYINT"/>
+        <result column="f_balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="f_suspense" property="suspense" jdbcType="DECIMAL"/>
+        <result column="f_clearing" property="clearing" jdbcType="DECIMAL"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        f_id, f_user_id, f_account_id, f_currency,
+        f_account_type, f_currency, f_account_type,
+        f_balance, f_suspense, f_created_at,
+        f_updated_at,f_clearing,f_version
+    </sql>
+    <select id="queryUid" resultMap="BaseResultMap">
+        select distinct f_user_id
+        from t_subaccount_temp limit #{offset},#{limit}
+    </select>
+    <select id="findByUid" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/>
+        from t_subaccount_temp where f_user_id={userId}
+    </select>
+</mapper>

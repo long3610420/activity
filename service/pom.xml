@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.exshell.ops.activity</groupId>
+    <artifactId>exshell-activity</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>com.exshell.ops.activity</groupId>
+  <artifactId>exshell-activity-service</artifactId>
+  <packaging>jar</packaging>
+  <version>${project.version}</version>
+
+  <properties>
+    <!-- MyBatis Generator -->
+    <!-- Java接口和实体类 -->
+    <targetJavaProject>${basedir}/src/test/java</targetJavaProject>
+    <targetMapperPackage>com.exshell.ops.activity.repository</targetMapperPackage>
+    <targetModelPackage>com.exshell.ops.activity.model</targetModelPackage>
+    <!-- XML生成路径 -->
+    <targetResourcesProject>${basedir}/src/test/resources</targetResourcesProject>
+    <targetXMLPackage>mapper</targetXMLPackage>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com.exshell.dawn</groupId>
+      <artifactId>dawn-base</artifactId>
+      <version>${broken.project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>1.5.9</version>
+    </dependency>
+    <dependency>
+      <groupId>com.exshell.bitex.commons</groupId>
+      <artifactId>commons-cache</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.5</version>
+        <configuration>
+          <configurationFile>${basedir}/src/main/resources/mbg/generatorConfig.xml</configurationFile>
+          <overwrite>true</overwrite>
+          <verbose>true</verbose>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+
+</project>

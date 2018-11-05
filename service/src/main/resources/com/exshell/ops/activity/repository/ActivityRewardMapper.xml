@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityRewardMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityReward">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="inviter_uid" jdbcType="BIGINT" property="inviterUid" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="amount" jdbcType="DECIMAL" property="amount"/>
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="reward_type" jdbcType="TINYINT" property="rewardType" />
+    <result column="is_enabled" jdbcType="TINYINT" property="isEnabled" />
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+      f_id, uid, activity_id, inviter_uid,
+      currency, amount, reason,
+      reward_type, is_enabled, f_version,
+      f_created_at, f_updated_at
+    </sql>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityReward" useGeneratedKeys="true">
+    insert into activity_reward (uid, activity_id, inviter_uid, 
+      currency, amount, reason, 
+      reward_type, is_enabled, f_version, 
+      f_created_at, f_updated_at)
+    values (#{uid,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, #{inviterUid,jdbcType=BIGINT}, 
+      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{reason,jdbcType=VARCHAR},
+      #{rewardType,jdbcType=TINYINT}, #{isEnabled,jdbcType=TINYINT}, #{version,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=BIGINT}, #{updatedAt,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityReward" useGeneratedKeys="true">
+    insert into activity_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="inviterUid != null">
+        inviter_uid,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="rewardType != null">
+        reward_type,
+      </if>
+      <if test="isEnabled != null">
+        is_enabled,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="inviterUid != null">
+        #{inviterUid,jdbcType=BIGINT},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardType != null">
+        #{rewardType,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryRewards" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>, from_unixtime(f_created_at/1000,'%Y-%m-%d') ctime
+    from activity_reward
+    where uid=#{uid}
+  </select>
+  <select id="count" resultType="java.lang.Integer">
+    select count(*)
+    from activity_reward
+    <where>
+
+      <if test="start != null">
+        and f_created_at > #{start}
+      </if>
+      <if test="end != null">
+        <![CDATA[  and f_created_at< #{end} ]]>
+      </if>
+    </where>
+  </select>
+</mapper>

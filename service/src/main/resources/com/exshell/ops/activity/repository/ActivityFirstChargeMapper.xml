@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityFirstChargeMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityFirstCharge">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="recharge_date" jdbcType="BIGINT" property="rechargeDate" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="amount" jdbcType="DECIMAL" property="amount"/>
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+  </resultMap>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityFirstCharge" useGeneratedKeys="true">
+    insert into activity_first_charge (uid, activity_id, recharge_date, 
+      currency, amount, f_version, 
+      f_created_at, f_updated_at)
+    values (#{uid,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, #{rechargeDate,jdbcType=BIGINT}, 
+      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{version,jdbcType=BIGINT},
+      #{createdAt,jdbcType=BIGINT}, #{updatedAt,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityFirstCharge" useGeneratedKeys="true">
+    insert into activity_first_charge
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="rechargeDate != null">
+        recharge_date,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeDate != null">
+        #{rechargeDate,jdbcType=BIGINT},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" resultType="java.lang.Integer">
+    select count(*)
+    from activity_first_charge
+  </select>
+
+  <select id="findFirstChargeStatistics" resultType="java.util.Map">
+    select  * from (
+    select
+    sum(num) rechargeNum,
+    <foreach collection="crrencys" item="crrency" index="index">
+      sum(case currency when  #{crrency} then  allMoney else 0 end) ${crrency},
+    </foreach>
+    rechargeDate
+    from (
+    select  sum(amount) allMoney,currency ,count(*) num,from_unixtime(r.recharge_date/1000,'%Y-%m-%d') rechargeDate
+    from `activity_first_charge`  r group by r.`currency`, rechargeDate ) t
+    group by rechargeDate with rollup
+    ) e
+    <where>
+      <if test="beginTime != null and beginTime != ''">
+        rechargeDate >= from_unixtime(#{beginTime},'%Y-%m-%d')and
+      </if>
+      <if test="endTime != null and endTime != ''">
+        from_unixtime(#{endTime},'%Y-%m-%d') >= rechargeDate
+      </if>
+    </where>
+  </select>
+
+
+</mapper>

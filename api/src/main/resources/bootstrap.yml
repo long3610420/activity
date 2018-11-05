@@ -1,0 +1,55 @@
+# OPS need info to do health check, please discuss with OPS before changing them.
+info:
+  app:
+    name: ${APP_NAME:NOT_SET}
+    check: ${APP_CHECK:NOT_SET}
+  env:
+    name: ${ENV_NAME:NOT_SET}
+  hostname: ${HOSTNAME:NOT_SET}
+  captain:
+    seq: ${CAPTAIN_SEQ:NOT_SET}
+    gen: ${CAPTAIN_GEN:NOT_SET}
+  build:
+    name: ${BUILD_APP_NAME:NOT_SET}
+    git:
+      version: ${BUILD_GIT_VERSION:NOT_SET}
+      hash: ${BUILD_GIT_HASH:NOT_SET}
+    time: ${BUILD_TIME:NOT_SET}
+    timestamp: ${BUILD_TIMESTAMP:NOT_SET}
+
+spring:
+  application:
+    name: ${APP_NAME:NOT_SET}
+  profiles:
+    active: ${ENV_NAME:local}
+    include:
+      - ${ENV_PROFILE:default}
+  cloud:
+    config:
+      fail-fast: true
+      uri: ${CONFIG_SERVERS}
+      label: ${CONFIG_GIT_VERSION:master}
+      prefix: ${spring.cloud.config.uri}/${spring.application.name}/${spring.profiles.active}/master
+
+endpoints.metrics.filter:
+  gaugeSubmissions: PER_HTTP_METHOD
+  counterSubmissions: PER_HTTP_METHOD
+
+logging:
+  config: ${spring.cloud.config.prefix}/logback/${spring.application.name}.xml
+
+# sub system  http://dawn-broker-bitex.devtest.exshell-dev.com
+dawn:
+  broker:
+    host: http://dawn-broker-bitex.devtest.exshell-dev.com
+
+pro:
+  web:
+    host: http://pro-web-new.devtest.exshell-dev.com
+
+activity:
+  start-at: 2018-09-25T00:00:0
+
+bitex:
+  general:
+    host: http://general-gateway.exshell-prod.com

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+    <task:executor id="executor" pool-size="${executor.pool.size}"/>
+    <task:scheduler id="scheduler" pool-size="${scheduler.pool.size}"/>
+    <task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true"/>
+
+    <bean id="crawlUsdtExchangeRate" class="com.exshell.ops.activity.job.task.ActivitySnapshot"></bean>
+    <!--
+    <bean id="crawlCnyCoinExchangeRate" class="CrawlCnyCoinExchangeRate"></bean>
+
+    <bean id="crawlCnyEurExchangeRate" class="CrawlCnyEurExchangeRate"/>
+    <bean id="crawlCnyGbpExchangeRate" class="CrawlCnyGbpExchangeRate"/>
+    <bean id="crawlCnyJpyExchangeRate" class="CrawlCnyJpyExchangeRate"/>
+    <bean id="crawlCnyKrwExchangeRate" class="CrawlCnyKrwExchangeRate"/>
+    <bean id="crawlUsdEurExchangeRate" class="CrawlUsdEurExchangeRate"/>
+    <bean id="crawlUsdGbpExchangeRate" class="CrawlUsdGbpExchangeRate"/>
+    <bean id="crawlUsdJpyExchangeRate" class="CrawlUsdJpyExchangeRate"/>
+    <bean id="crawlUsdKrwExchangeRate" class="CrawlUsdKrwExchangeRate"/>
+    <bean id="crawlUsdRubExchangeRate" class="CrawlUsdRubExchangeRate"/>
+    -->
+
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="crawlUsdtExchangeRate" method="execute"
+                        cron="${job.update.usdt.rate.cron}"/>
+
+    </task:scheduled-tasks>
+
+</beans>

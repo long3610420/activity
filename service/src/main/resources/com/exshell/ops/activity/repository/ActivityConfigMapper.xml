@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityConfigMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityConfig">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="begin_date" jdbcType="BIGINT" property="beginDate" />
+    <result column="end_date" jdbcType="BIGINT" property="endDate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="rule" jdbcType="VARCHAR" property="rule" />
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+  </resultMap>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityConfig" useGeneratedKeys="true">
+    insert into activity_config (name, summary, begin_date, 
+      end_date, status, rule, 
+      f_version, f_created_at, f_updated_at
+      )
+    values (#{name,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{beginDate,jdbcType=BIGINT}, 
+      #{endDate,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{rule,jdbcType=VARCHAR}, 
+      #{version,jdbcType=BIGINT}, #{createdAt,jdbcType=BIGINT}, #{updatedAt,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityConfig" useGeneratedKeys="true">
+    insert into activity_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="beginDate != null">
+        begin_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="rule != null">
+        rule,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        #{beginDate,jdbcType=BIGINT},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="rule != null">
+        #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

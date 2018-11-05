@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityDeductibleMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityDeductible">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="fee" jdbcType="BIGINT" property="fee" />
+    <result column="fee_currency" jdbcType="VARCHAR" property="feeCurrency" />
+    <result column="fee_amount" jdbcType="BIGINT" property="feeAmount" />
+    <result column="fee_date" jdbcType="BIGINT" property="feeDate" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+  </resultMap>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityDeductible" useGeneratedKeys="true">
+    insert into activity_deductible (uid, fee, fee_currency, 
+      fee_amount, fee_date, order_id, 
+      f_version, f_created_at, f_updated_at
+      )
+    values (#{uid,jdbcType=BIGINT}, #{fee,jdbcType=BIGINT}, #{feeCurrency,jdbcType=VARCHAR}, 
+      #{feeAmount,jdbcType=BIGINT}, #{feeDate,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, 
+      #{version,jdbcType=BIGINT}, #{createdAt,jdbcType=BIGINT}, #{updatedAt,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityDeductible" useGeneratedKeys="true">
+    insert into activity_deductible
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="feeCurrency != null">
+        fee_currency,
+      </if>
+      <if test="feeAmount != null">
+        fee_amount,
+      </if>
+      <if test="feeDate != null">
+        fee_date,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=BIGINT},
+      </if>
+      <if test="feeCurrency != null">
+        #{feeCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="feeAmount != null">
+        #{feeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="feeDate != null">
+        #{feeDate,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

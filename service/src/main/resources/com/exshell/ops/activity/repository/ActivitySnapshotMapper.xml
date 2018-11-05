@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivitySnapshotMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivitySnapshot">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="frequency" jdbcType="TINYINT" property="frequency" />
+    <result column="recharge_date" jdbcType="BIGINT" property="rechargeDate" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="reward" jdbcType="DECIMAL" property="reward" />
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+  </resultMap>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivitySnapshot" useGeneratedKeys="true">
+    insert into activity_snapshot (uid, frequency, recharge_date, 
+      amount, reward, f_version, 
+      f_created_at, f_updated_at)
+    values (#{uid,jdbcType=BIGINT}, #{frequency,jdbcType=TINYINT}, #{rechargeDate,jdbcType=BIGINT}, 
+      #{amount,jdbcType=DECIMAL}, #{reward,jdbcType=DECIMAL}, #{version,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=BIGINT}, #{updatedAt,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivitySnapshot" useGeneratedKeys="true">
+    insert into activity_snapshot
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="rechargeDate != null">
+        recharge_date,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=TINYINT},
+      </if>
+      <if test="rechargeDate != null">
+        #{rechargeDate,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

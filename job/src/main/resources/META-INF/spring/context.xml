@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath*:/conf/*.properties"/>
+    </bean>
+
+    <!--<bean class="com.exshell.bitex.general.helper.ProIndexHelper"/>-->
+    <!--<bean class="com.exshell.bitex.general.helper.HttpInterHelper"/>-->
+
+    <!--<import resource="classpath:/META-INF/spring/redis.xml"/>-->
+    <import resource="classpath:/META-INF/spring/job.xml"/>
+    <import resource="classpath:/META-INF/spring/service.xml"/>
+</beans>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityPrizeMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityPrize">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="f_type" jdbcType="TINYINT" property="type" />
+    <result column="prize_date" jdbcType="BIGINT" property="prizeDate" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="prizeTime" jdbcType="BIGINT" property="prizeTime" />
+  </resultMap>
+  <sql id="selectSql">
+    select p.f_id,p.uid,p.f_type,p.prize_date,p.phone,p.f_version,p.f_created_at,
+    p.f_updated_at,p.state,from_unixtime(prize_date/1000,'%Y-%m-%d') prizeTime
+    from activity_prize p
+  </sql>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityPrize" useGeneratedKeys="true">
+    insert into activity_prize (uid, f_type, prize_date, 
+      f_created_at,f_updated_at,
+      state)
+    values (#{uid,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, #{prizeDate,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=BIGINT},#{updatedAt,jdbcType=BIGINT}, #{state,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityPrize" useGeneratedKeys="true">
+    insert into activity_prize
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="type != null">
+        f_type,
+      </if>
+      <if test="prizeDate != null">
+        prize_date,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="prizeDate != null">
+        #{prizeDate,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryActivityPrize" resultMap="BaseResultMap" parameterType="com.exshell.ops.activity.model.ActivityPrize">
+    <include refid="selectSql"></include>
+    <where>
+       <if test="uid != null">
+        p.uid = #{uid}
+       </if>
+       <if test="beginTime != null and beginTime != ''">
+         and from_unixtime(p.prize_date/1000,'%Y-%m-%d') >= #{beginTime}
+       </if>
+      <if test="endTime != null and endTime != ''">
+         and #{endTime}  >= from_unixtime(p.prize_date/1000,'%Y-%m-%d')
+      </if>
+      <if test="state != null">
+        and  p.state = #{state}
+      </if>
+    </where>
+  </select>
+
+  <update id="update">
+      update activity_prize set state= #{state} , f_version=f_version+1 ,f_updated_at=#{updatedAt} where uid=#{uid}
+  </update>
+</mapper>

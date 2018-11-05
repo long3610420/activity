@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exshell.ops.activity.repository.ActivityUserMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.ActivityUser">
+    <result column="f_id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="code" jdbcType="VARCHAR" property="code"/>
+    <result column="inviter_uid" jdbcType="BIGINT" property="inviterUid" />
+    <result column="inviter_code" jdbcType="VARCHAR" property="inviterCode"/>
+    <result column="is_recharge" jdbcType="TINYINT" property="isRecharge" />
+    <result column="is_reminded" jdbcType="TINYINT" property="isReminded" />
+    <result column="phone_num" jdbcType="CHAR" property="phoneNum" />
+    <result column="f_version" jdbcType="BIGINT" property="version" />
+    <result column="f_created_at" jdbcType="BIGINT" property="createdAt" />
+    <result column="f_updated_at" jdbcType="BIGINT" property="updatedAt" />
+    <result column="reward" jdbcType="DECIMAL" property="reward" />
+  </resultMap>
+  <sql id="Base_Column_List">
+      f_id, uid, code, inviter_uid,
+      inviter_code, is_recharge, is_reminded,
+      phone_num, f_version, f_created_at,
+      f_updated_at,reward
+    </sql>
+  <insert id="insert" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityUser" useGeneratedKeys="true">
+    insert into activity_user (uid, code, inviter_uid, 
+      inviter_code, is_recharge, is_reminded, 
+      phone_num, f_version, f_created_at, 
+      f_updated_at,reward)
+    values (#{uid,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{inviterUid,jdbcType=BIGINT},
+      #{inviterCode,jdbcType=VARCHAR}, #{isRecharge,jdbcType=TINYINT}, #{isReminded,jdbcType=TINYINT},
+      #{phoneNum,jdbcType=CHAR}, #{version,jdbcType=BIGINT}, #{createdAt,jdbcType=BIGINT}, 
+      #{updatedAt,jdbcType=BIGINT}, #{reward,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" keyColumn="f_id" keyProperty="id" parameterType="com.exshell.ops.activity.model.ActivityUser" useGeneratedKeys="true">
+    insert into activity_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="inviterUid != null">
+        inviter_uid,
+      </if>
+      <if test="inviterCode != null">
+        inviter_code,
+      </if>
+      <if test="isRecharge != null">
+        is_recharge,
+      </if>
+      <if test="isReminded != null">
+        is_reminded,
+      </if>
+      <if test="phoneNum != null">
+        phone_num,
+      </if>
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="inviterUid != null">
+        #{inviterUid,jdbcType=BIGINT},
+      </if>
+      <if test="inviterCode != null">
+        #{inviterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecharge != null">
+        #{isRecharge,jdbcType=TINYINT},
+      </if>
+      <if test="isReminded != null">
+        #{isReminded,jdbcType=TINYINT},
+      </if>
+      <if test="phoneNum != null">
+        #{phoneNum,jdbcType=CHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from activity_user
+    where f_id=#{id}
+  </select>
+
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from activity_user
+    where uid=#{uid}
+  </select>
+
+  <select id="count" resultType="java.lang.Integer">
+    select count(*)
+    from activity_user
+  </select>
+
+  <update id="update" parameterType="com.exshell.ops.activity.model.ActivityUser">
+    update activity_user
+    <set>
+      <if test="isRecharge != null">
+        is_recharge = #{isRecharge,jdbcType=INTEGER},
+      </if>
+      <if test="isReminded != null">
+        is_reminded = #{isReminded,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        f_version = f_version+1,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at = #{updatedAt,jdbcType=BIGINT},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+     </set>
+    where f_id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByUid" parameterType="com.exshell.ops.activity.model.ActivityUser">
+    update activity_user
+
+    <set>
+      <if test="isRecharge != null">
+        is_recharge = #{isRecharge,jdbcType=INTEGER},
+      </if>
+      <if test="isReminded != null">
+        is_reminded = #{isReminded,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        f_version = f_version+1,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at = #{updatedAt,jdbcType=BIGINT},
+      </if>
+      <if test="reward != null">
+        reward =  #{reward,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where uid = #{uid}
+  </update>
+
+  <select id="queryRechargeRecord" resultMap="BaseResultMap">
+      select u.uid, u.`phone_num` phonmeNum, u.`reward` from `activity_user` u
+      where not exists(select uid from activity_prize p where p.uid = u.uid and p.state = 1)
+      <if test="minReward != null">
+        and u.reward >= #{minReward}
+      </if>
+      <if test="maxReward != null">
+        and #{maxReward} >= u.reward
+      </if>
+  </select>
+</mapper>

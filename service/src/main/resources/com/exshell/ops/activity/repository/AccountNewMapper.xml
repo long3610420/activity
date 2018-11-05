@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd" >
+<mapper namespace="com.exshell.ops.activity.repository.AccountNewMapper">
+  <resultMap id="BaseResultMap" type="com.exshell.ops.activity.model.AccountNew">
+    <id column="f_id" property="id" jdbcType="BIGINT" />
+    <result column="f_version" property="version" jdbcType="BIGINT" />
+    <result column="f_user_id" property="userId" jdbcType="BIGINT" />
+    <result column="f_type" property="type" jdbcType="TINYINT" />
+    <result column="f_subtype" property="subtype" jdbcType="VARCHAR" />
+    <result column="f_state" property="state" jdbcType="TINYINT" />
+    <result column="f_created_at" property="createdAt"
+      jdbcType="BIGINT" />
+    <result column="f_updated_at" property="updatedAt"
+      jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    f_id, f_version, f_user_id, f_type, f_subtype, f_state, f_created_at, f_updated_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+    parameterType="java.lang.Long">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_account
+    where f_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByAccountIdAndUserId" resultMap="BaseResultMap"
+    parameterType="java.util.Map">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_account
+    where f_id = #{accountId,jdbcType=BIGINT} and f_user_id = #{userId,jdbcType=BIGINT}
+    limit 1
+  </select>
+  <insert id="insertSelective" parameterType="com.exshell.ops.activity.model.AccountNew" keyColumn="f_id" keyProperty="id" useGeneratedKeys="true">
+    insert into t_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="version != null">
+        f_version,
+      </if>
+      <if test="userId != null">
+        f_user_id,
+      </if>
+      <if test="type != null">
+        f_type,
+      </if>
+      <if test="subtype != null">
+        f_subtype,
+      </if>
+      <if test="state != null">
+        f_state,
+      </if>
+      <if test="createdAt != null">
+        f_created_at,
+      </if>
+      <if test="updatedAt != null">
+        f_updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="subtype != null">
+        #{subtype,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateAccountState">
+    UPDATE t_account SET
+      f_state = #{state}, f_updated_at = #{updatedAt}, f_version = f_version + 1
+    WHERE f_id = #{id} AND f_version = #{version}
+  </update>
+
+  <select id="selectByState" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM t_account WHERE f_state IN
+    <foreach collection="states" item="state" open="(" separator="," close=")">
+      #{state}
+    </foreach>
+  </select>
+
+  <select id="selectByUserIdAndType" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM t_account
+    WHERE f_user_id = #{userId} AND f_type = #{type} AND f_subtype = #{subtype}
+  </select>
+
+  <select id="selectByUserIdAndTypes" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM t_account WHERE f_user_id = #{userId} AND f_subtype ='' AND f_type IN
+    <foreach collection="types" item="type" open="(" separator="," close=")">
+      #{type}
+    </foreach>
+  </select>
+
+  <select id="selectAccountsByUserIdTypes" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM t_account WHERE f_user_id = #{userId} AND f_subtype ='' AND f_type IN
+    <foreach collection="types" item="type" open="(" separator="," close=")">
+      #{type}
+    </foreach>
+  </select>
+
+  <select id="findByUserIdAndType" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM t_account
+    WHERE f_user_id = #{userId}
+    <if test="type != null">
+      AND f_type = #{type}
+    </if>
+    <if test="subType != null">
+      AND f_subtype = #{subType}
+    </if>
+  </select>
+
+  <select id="findByPrimaryKeys" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM t_account
+    WHERE f_id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+
+  <select id="findByUserIdAndTypes" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM t_account
+    WHERE f_user_id = #{userId} AND f_type = #{type}
+    <if test="!subTypes.empty">
+      AND f_subtype IN
+      <foreach collection="subTypes" item="subType" open="(" separator="," close=")">
+        #{subType}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_account
+    where f_user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findFlMgtAccounts" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_account
+    where f_subtype = #{symbol}
+    <if test="userId != null">
+      and f_user_id = #{userId}
+    </if>
+    <if test="type != null">
+      and f_type = #{type}
+    </if>
+    <if test="state != null">
+      and f_state = #{state}
+    </if>
+    <if test="from != null">
+      <choose>
+        <when test='direct == "next"'>
+          <![CDATA[and f_id <= #{from,jdbcType=BIGINT}]]>
+          <![CDATA[order by f_id desc]]>
+        </when>
+        <when test='direct == "prev"'>
+          <![CDATA[and f_id >= #{from,jdbcType=BIGINT}]]>
+          <![CDATA[order by f_id asc]]>
+        </when>
+      </choose>
+    </if>
+    <if test="from == null">
+      order by f_id desc
+    </if>
+    limit ${size}
+  </select>
+
+  <select id="findAccountByStateAndUserId" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM t_account
+    <where>
+      <if test="userId != null">
+        f_user_id = #{userId}
+      </if>
+      <if test="states != null">
+        AND f_state in
+        <foreach collection="states" item="state" open="(" close=")" separator=",">
+          #{state}
+        </foreach>
+      </if>
+    </where>
+  </select>
+</mapper>

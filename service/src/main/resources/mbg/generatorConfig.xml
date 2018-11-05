@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<property name="javaFileEncoding" value="UTF-8" />
+
+		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+			<property name="searchString" value="Example$" />
+			<property name="replaceString" value="Query" />
+		</plugin>
+
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://sqltest-mysql.cluster-cususlnr0svy.us-east-2.rds.amazonaws.com:3306/bitex_pro?useSSL=false"
+						userId="sqltest"
+			password="exbell2018">
+		</jdbcConnection>
+
+		<!-- 生成Model对象 -->
+		<javaModelGenerator targetPackage="${targetModelPackage}"
+			targetProject="${targetJavaProject}">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成XML -->
+		<sqlMapGenerator targetPackage="${targetXMLPackage}"
+			targetProject="${targetResourcesProject}" />
+
+		<!-- 生成Mapper -->
+		<javaClientGenerator targetPackage="${targetMapperPackage}"
+			targetProject="${targetJavaProject}" type="XMLMAPPER" />
+
+<!--		<table tableName="t_account" domainObjectName="Account" enableSelectByExample="false"
+			enableDeleteByPrimaryKey="false" enableDeleteByExample="false"
+			enableCountByExample="false" enableUpdateByExample="false"
+			selectByPrimaryKeyQueryId="false" selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<columnOverride column="f_type" javaType="Integer"
+				jdbcType="TINYINT"></columnOverride>
+			<columnOverride column="f_state" property="state" javaType="Integer"
+				jdbcType="TINYINT"></columnOverride>
+		</table>
+		<table tableName="t_account_action" domainObjectName="AccountAction" enableSelectByExample="false"
+			enableDeleteByPrimaryKey="false" enableDeleteByExample="false"
+			enableCountByExample="false" enableUpdateByExample="false"
+			selectByPrimaryKeyQueryId="false" selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+		</table>
+		<table tableName="t_subaccount" domainObjectName="Subaccount" enableSelectByExample="false"
+			enableDeleteByPrimaryKey="false" enableDeleteByExample="false"
+			enableCountByExample="false" enableUpdateByExample="false"
+			selectByPrimaryKeyQueryId="false" selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<columnOverride column="f_type" javaType="Integer"
+				jdbcType="TINYINT"></columnOverride>
+		</table>
+		<table tableName="t_clearing_subaccount" domainObjectName="ClearingSubaccount" enableSelectByExample="false"
+			   enableDeleteByPrimaryKey="false" enableDeleteByExample="false"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   selectByPrimaryKeyQueryId="false" selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<columnOverride column="f_type" javaType="Integer"
+							jdbcType="TINYINT"></columnOverride>
+		</table>-->
+		<!--<table tableName="activity_deductible" domainObjectName="ActivityDeductible"
+			enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			enableDeleteByExample="false" enableCountByExample="false"
+			enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<columnOverride column="f_type" javaType="Integer"
+				jdbcType="TINYINT"></columnOverride>
+		</table>
+		<table tableName="activity_config" domainObjectName="ActivityConfig"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			&lt;!&ndash;<columnOverride column="f_type" javaType="Integer"
+							jdbcType="TINYINT"></columnOverride>&ndash;&gt;
+		</table>
+		<table tableName="activity_first_charge" domainObjectName="ActivityFirstCharge"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			&lt;!&ndash;<columnOverride column="f_type" javaType="Integer"
+							jdbcType="TINYINT"></columnOverride>&ndash;&gt;
+		</table>
+		<table tableName="activity_user" domainObjectName="ActivityUser"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			&lt;!&ndash;<columnOverride column="f_type" javaType="Integer"
+							jdbcType="TINYINT"></columnOverride>&ndash;&gt;
+		</table>
+		<table tableName="activity_reward" domainObjectName="ActivityReward"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			&lt;!&ndash;<columnOverride column="f_type" javaType="Integer"
+							jdbcType="TINYINT"></columnOverride>&ndash;&gt;
+		</table>-->
+
+		<table tableName="activity_user" domainObjectName="ActivityUser"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<!--<columnOverride column="f_type" javaType="Integer"-->
+										<!--jdbcType="TINYINT"></columnOverride>-->
+		</table>
+		<table tableName="activity_snapshot" domainObjectName="ActivitySnapshot"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<!--<columnOverride column="f_type" javaType="Integer"-->
+							<!--jdbcType="TINYINT"></columnOverride>-->
+		</table>
+		<table tableName="activity_reward_lock" domainObjectName="ActivityRewardLock"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<!--<columnOverride column="f_type" javaType="Integer"-->
+							<!--jdbcType="TINYINT"></columnOverride>-->
+		</table>
+		<table tableName="activity_prize" domainObjectName="ActivityPrize"
+			   enableSelectByExample="false" enableDeleteByPrimaryKey="false"
+			   enableDeleteByExample="false" enableCountByExample="false"
+			   enableUpdateByExample="false" selectByPrimaryKeyQueryId="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="f_id" sqlStatement="JDBC" identity="true" />
+			<columnRenamingRule searchString="^f_" replaceString=""/>
+			<columnOverride column="f_type" javaType="Integer"
+							jdbcType="TINYINT"></columnOverride>
+		</table>
+	</context>
+
+</generatorConfiguration>
